@@ -1,0 +1,15 @@
+.products_img img{
+    height: 200px
+}
+
+a{
+    text-decoration: none;
+    color: black
+}
+
+.products_sort{
+    background-color: rgba(0, 0, 0, 0.116);
+    padding: 10px;
+    margin: 10px
+    
+}

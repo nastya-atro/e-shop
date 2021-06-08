@@ -1,7 +1,7 @@
 import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field} from 'formik';
 import { useDispatch } from 'react-redux';
-import { addNewProductThunk } from './../2-bll/StoreReducer';
+import { addNewProductThunk } from '../product-2-bll/StoreReducer';
 
 export type ValuesType = {
     title: string
@@ -20,7 +20,9 @@ const AddProductForm: React.FC = () => {
         let description = values.description
         let image = values.image
         let category = values.category
+        
         dispatch(addNewProductThunk({ title, price, description, image, category }))
+        setSubmitting(false)
     }
 
     return (

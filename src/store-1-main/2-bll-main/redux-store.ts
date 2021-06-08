@@ -1,11 +1,15 @@
 import { Action, applyMiddleware, combineReducers, createStore } from "redux";
 import thunkMiddleware, { ThunkAction } from "redux-thunk"
-import StoreReducer from "../../store-2-features/Store/2-bll/StoreReducer";
+import CartReducer from "../../store-2-features/ShopCart/2-bll-cart/CartReducer";
+import StoreReducer from "../../store-2-features/Store/product-2-bll/StoreReducer";
+import UsersReducer from "../../store-2-features/Users/2-bll-users/UsersReducer";
 import AppReducer from './AppReducer';
 
 let rootReducer = combineReducers({
     app: AppReducer,
-    store: StoreReducer
+    store: StoreReducer,
+    cart: CartReducer,
+    users: UsersReducer
 })
 
 type RootReducerType = typeof rootReducer

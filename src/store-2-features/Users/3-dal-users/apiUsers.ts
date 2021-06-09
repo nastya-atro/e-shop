@@ -17,5 +17,13 @@ export const apiUsers = {
     getSingleUser(idUser:number){
         return instanse.get(`users/${idUser}`)
         .then(res => res.data)
+    },
+    updateUserInfo(idUser: number, user:UsersType){
+        return instanse.patch(`users/${idUser}`, {user})
+        .then(res => res.data)
+    },
+    deleteProfile(idUser: number){
+        return instanse.delete(`users/${idUser}`)
+        .then(res => res.data)
     }
 }

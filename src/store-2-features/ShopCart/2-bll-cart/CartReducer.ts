@@ -6,8 +6,8 @@ type ProductsType = {
     quantity: number
 }
 
-type CartType = {
-    id: number
+export type CartType = {
+    id?: number
     userId: number
     date: Date
     products: Array<ProductsType>
@@ -38,8 +38,25 @@ const CartReducer = (state: InitialStateType = initialState, action: ActionsType
         case 'cart/SET_USER_CARTS':
             return {
                 ...state,
-                carts: state.carts.filter((c)=>c.userId === action.idUser)
+                carts: state.carts.filter((c) => c.userId === action.idUser)
             }
+
+        case 'cart/ADD_PRODUCT_IN_CART':
+            return {
+                ...state,
+                carts: [...state.carts, action.cart]
+            }
+        case 'cart/CHANGE_CART':
+            return {
+                ...state,
+                singleCart: action.cart
+            }
+        case 'cart/DELETE_CART':
+            return {
+                ...state,
+                carts: state.carts.filter(c => c.id !== action.idCart)
+            }
+
 
 
         default: return state
@@ -57,6 +74,15 @@ export const actionsCart = {
     userCartsRecived: (idUser: number) => ({
         type: 'cart/SET_USER_CARTS', idUser
     } as const),
+    productAddedInCart: (cart: CartType) => ({
+        type: 'cart/ADD_PRODUCT_IN_CART', cart
+    } as const),
+    cartChanged: (cart: CartType) => ({
+        type: 'cart/CHANGE_CART', cart
+    } as const),
+    cartDeleted: (idCart: number) => ({
+        type: 'cart/DELETE_CART', idCart
+    } as const),
 
 }
 
@@ -70,18 +96,46 @@ export const getAllCartsThunk = (): ThunkType => {
     }
 }
 
-export const getSingleCartThunk = (idCart:number): ThunkType => {
+export const getSingleCartThunk = (idCart: number): ThunkType => {
     return async (dispatch) => {
         let data = await apiCart.getSingleCart(idCart)
         dispatch(actionsCart.singleCartRecived(data))
     }
 }
 
-export const getUserCartsThunk = (idUser:number): ThunkType => {
+export const getUserCartsThunk = (idUser: number): ThunkType => {
     return async (dispatch) => {
         let data = await apiCart.getUserCart(idUser)
         dispatch(actionsCart.userCartsRecived(idUser))
         dispatch(actionsCart.cartsRecived(data))
+    }
+}
+
+export const addNewProductInCartThunk = (obj: CartType): ThunkType => {
+    debugger
+    return async (dispatch) => {
+        debugger
+        let data = await apiCart.addProductInCart(obj)
+        console.log(data)
+        dispatch(actionsCart.productAddedInCart(data))
+    }
+}
+
+export const changeProductInCartThunk = (idCart:number, obj: CartType): ThunkType => {
+    return async (dispatch) => {
+        let data = await apiCart.changeProductCart(idCart, obj)
+        console.log(data)
+        dispatch(actionsCart.cartChanged(data))
+    }
+}
+
+export const deleteProductCartThunk = (id:number): ThunkType => {
+
+    return async (dispatch) => {
+
+        let data = await apiCart.deleteProductCart(id)
+        console.log(data)
+        dispatch(actionsCart.cartDeleted(id))
     }
 }
 

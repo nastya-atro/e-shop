@@ -1,30 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { deleteProfileThunk, getSingleUserThunk, updateProfileInfoThunk } from '../2-bll-users/UsersReducer';
+import { isLoadingSelector, singleUserSelector} from './../2-bll-users/UsersSelector';
 import { Formik, Form, Field } from 'formik';
-import { useDispatch } from 'react-redux';
-import { signUpThunk } from '../2-bll-users/UsersReducer';
-import { Redirect } from 'react-router';
+import {SignUpValuesType} from './SignUpPage'
 
 
-export type SignUpValuesType = {
-    email: string
-    password: string
-    userName: string
-    firstname: string
-    lastname: string
-    city: string
-    street: string
-    number: number
-    zipcode: string
-    phone: string
 
-}
+const MyProfile = () => {
+    const singleUser = useSelector(singleUserSelector)
+    const isLoading = useSelector(isLoadingSelector)
 
-const SignUpPage = () => {
+    const [visibleFormChanges, setVisibleFormChanges] = useState(false)
+
+
     const dispatch = useDispatch()
 
-    const [isAuth, setIsAuth] = useState(false)
-
-    const login = (values: SignUpValuesType, { setSubmitting }: any) => {
+    const changeInfo = (values: SignUpValuesType, { setSubmitting }: any) => {
         let newUser = {
             email: values.email,
             username: values.userName,
@@ -45,22 +37,49 @@ const SignUpPage = () => {
             },
             phone: values.phone
         }
-        dispatch(signUpThunk(newUser))
-        setIsAuth(true)
+        dispatch(updateProfileInfoThunk(1, newUser))
         setSubmitting(false)
+        setVisibleFormChanges(false)
+
     }
 
-    if (isAuth) {
-        return <Redirect to={'/'} />
+
+
+    useEffect(() => {
+        dispatch(getSingleUserThunk(1))
+
+    }, [])
+
+    const deleteProfile=()=>{
+        dispatch(deleteProfileThunk(1))
     }
+    const changeProfile=()=>{
+        setVisibleFormChanges(true)
+
+    }
+
 
     return (
-        <div>
-            <h3>Sign Up Form</h3>
+        <div>{singleUser && <div>
+            <div><b>User name: </b>{singleUser.name.firstname} {singleUser.name.lastname}</div>
+            <div><b>User login: </b>{singleUser.username}</div>
 
-            <Formik
+            <div><b>Contacts: </b>
+                <div>Email: {singleUser.email}</div>
+                <div>Phone: {singleUser.phone}</div></div>
+
+            <div><b>Adress: </b>
+                <div>City: {singleUser.address.city}</div>
+                <div>Street: {singleUser.address.street}</div>
+                <div>Zipcode: {singleUser.address.zipcode}</div>
+                <div>Geolocation lat: {singleUser.address.geolocation.lat}Geolocation long: {singleUser.address.geolocation.long}</div>
+            </div>
+
+        </div>}
+{visibleFormChanges &&<div>
+    <Formik
                 initialValues={{ email: '', password: '', userName: '', firstname: '', lastname: '', city: '', street: '', number: 1, zipcode: '', phone: '' }}
-                onSubmit={login}
+                onSubmit={changeInfo}
             >
                 {({ isSubmitting, handleChange, values, isValid,
                     handleBlur, }) => (
@@ -91,14 +110,23 @@ const SignUpPage = () => {
                             type="password" name="password" placeholder="Password" value={values.password} />
 
                         <button type="submit" disabled={!isValid || isSubmitting}>
-                            Sign up
+                            ChangeInfo
            </button>
                     </Form>
                 )}
             </Formik>
+                 </div>
+        }
+        
+  
 
+
+        <button onClick={changeProfile}>Change Profile</button>
+        <div><button onClick={deleteProfile}>Delete Profile</button></div>
+        {!isLoading && <div>Profile deleted successfuly</div>}
+            
         </div>
     )
 }
 
-export default SignUpPage
+export default MyProfile

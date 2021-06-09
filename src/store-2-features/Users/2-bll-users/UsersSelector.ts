@@ -18,4 +18,8 @@ export const singleUserSelector=(state: AppStateType)=>{
     return state.users.singleUser
 }
 
+export const isLoadingSelector=(state: AppStateType)=>{
+    return state.users.isLoading
+}
+
 

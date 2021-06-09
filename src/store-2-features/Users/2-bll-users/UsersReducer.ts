@@ -29,7 +29,10 @@ let initialState = {
     token: '',
     isAuth: false,
     error: false,
-    singleUser: null as null | UsersType
+    singleUser: null as null | UsersType,
+    isLoading: true
+
+
 }
 
 export type InitialStateType = typeof initialState
@@ -61,6 +64,23 @@ const UsersReducer = (state: InitialStateType = initialState, action: ActionsTyp
                 singleUser: action.singleUser
 
             }
+        case 'users/UPDATE_PROFILE_INFO':
+            return {
+                ...state,
+                singleUser: action.user
+
+            }
+        case 'users/DELETE_PROFILE':
+            return {
+                ...state,
+                users: state.users.filter(u => u.id !== action.id)
+
+            }
+        case 'user/TOOGLE_IS_LOAGING':
+            return {
+                ...state,
+                isLoading: action.isLoading
+            }
         default: return state
     }
 
@@ -78,6 +98,15 @@ export const actionsUsers = {
     } as const),
     userSelected: (singleUser: UsersType) => ({
         type: 'users/SET_SINGLE_USER', singleUser
+    } as const),
+    profileInfoUpdated: (user: UsersType) => ({
+        type: 'users/UPDATE_PROFILE_INFO', user
+    } as const),
+    deleteProfile: (id: number) => ({
+        type: 'users/DELETE_PROFILE', id
+    } as const),
+    isLoadingChanged: (isLoading: boolean) => ({
+        type: 'user/TOOGLE_IS_LOAGING', isLoading
     } as const),
 }
 
@@ -114,6 +143,26 @@ export const getSingleUserThunk = (id: number): ThunkType => {
     return async (dispatch) => {
         let data = await apiUsers.getSingleUser(id)
         dispatch(actionsUsers.userSelected(data))
+    }
+}
+
+export const updateProfileInfoThunk = (id: number, user: UsersType): ThunkType => {
+
+    return async (dispatch) => {
+       
+        let data = await apiUsers.updateUserInfo(id, user)
+        console.log(data)
+        dispatch(actionsUsers.profileInfoUpdated(data))
+    }
+}
+
+export const deleteProfileThunk = (id: number): ThunkType => {
+  
+    return async (dispatch) => {
+        dispatch(actionsUsers.isLoadingChanged(true))
+        let data = await apiUsers.deleteProfile(id)
+        dispatch(actionsUsers.deleteProfile(id))
+        dispatch(actionsUsers.isLoadingChanged(false))
     }
 }
 

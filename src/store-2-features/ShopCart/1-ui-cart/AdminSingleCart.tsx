@@ -9,6 +9,8 @@ import {  useHistory } from 'react-router-dom';
 const AgminSingleCart=()=>{
 
     const singleCart = useSelector(singleCartSelector)
+
+    
     
     const dispatch = useDispatch()
 
@@ -25,10 +27,15 @@ const AgminSingleCart=()=>{
     return(
         <div>{singleCart && <div>
             <div>{new Date(singleCart.date).toLocaleDateString()}</div>
-            <div>{singleCart.products.map((p, index)=><div key={index}><b>ID of product: </b>{p.productId}
-                <b>Quantity: </b>{p.quantity}</div>)}</div>
+            <div>{singleCart.products && singleCart.products.map((p, index)=><div key={index}>
+                <b>ID of product: </b>
+                {p.productId}
+                <b>Quantity: </b>
+                {p.quantity}
+                </div>)}
+                </div>
                 <div>User id: {singleCart.userId}</div>
-            
+
             </div>}</div>
     )
 }

@@ -1,4 +1,5 @@
 import { instanse } from "../../../store-1-main/3-dal-main/api"
+import {CartType} from './../2-bll-cart/CartReducer'
 
 
 export const apiCart = {
@@ -12,6 +13,18 @@ export const apiCart = {
     },
     getUserCart(idUser: number){
         return instanse.get(`carts/user/${idUser}`)
+        .then(res => res.data)
+    },
+    addProductInCart(objNewProduct: CartType){
+        return instanse.post(`carts`, {objNewProduct})
+        .then(res => res.data)
+    },
+    changeProductCart(idCart: number, objNewProduct: CartType){
+        return instanse.put(`carts/${idCart}`, {objNewProduct})
+        .then(res => res.data)
+    },
+    deleteProductCart(idCart: number){
+        return instanse.delete(`carts/${idCart}`)
         .then(res => res.data)
     }
 }

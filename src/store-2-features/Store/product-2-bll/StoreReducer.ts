@@ -17,7 +17,7 @@ type ProductsType = {
 let initialState = {
     products: [] as Array<ProductsType>,
     isLoading: true,
-    limitPage: 5,
+    limitPage: 20,
     singleProduct: null as null | ProductsType,
     sortValue: 'desc',
     category: [] as null | Array<String>
@@ -56,7 +56,7 @@ const StoreReducer = (state: InitialStateType = initialState, action: ActionsTyp
         case 'products/GET_CATEGORY_PRODUCTS':
             return {
                 ...state,
-                category: ['Все товары', ...action.category]
+                category: ['All products', ...action.category]
             }
         case 'products/ADD_NEW_PRODUCT':
             return {

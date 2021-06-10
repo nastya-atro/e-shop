@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/nastya-atro/e-shop.git/static/css/main.e79fa6c4.chunk.css",
+    "main.js": "/nastya-atro/e-shop.git/static/js/main.20df7540.chunk.js",
+    "main.js.map": "/nastya-atro/e-shop.git/static/js/main.20df7540.chunk.js.map",
+    "runtime-main.js": "/nastya-atro/e-shop.git/static/js/runtime-main.5e756f43.js",
+    "runtime-main.js.map": "/nastya-atro/e-shop.git/static/js/runtime-main.5e756f43.js.map",
+    "static/js/2.6121bb90.chunk.js": "/nastya-atro/e-shop.git/static/js/2.6121bb90.chunk.js",
+    "static/js/2.6121bb90.chunk.js.map": "/nastya-atro/e-shop.git/static/js/2.6121bb90.chunk.js.map",
+    "static/js/3.a753eda1.chunk.js": "/nastya-atro/e-shop.git/static/js/3.a753eda1.chunk.js",
+    "static/js/3.a753eda1.chunk.js.map": "/nastya-atro/e-shop.git/static/js/3.a753eda1.chunk.js.map",
+    "index.html": "/nastya-atro/e-shop.git/index.html",
+    "static/css/main.e79fa6c4.chunk.css.map": "/nastya-atro/e-shop.git/static/css/main.e79fa6c4.chunk.css.map",
+    "static/js/2.6121bb90.chunk.js.LICENSE.txt": "/nastya-atro/e-shop.git/static/js/2.6121bb90.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.5e756f43.js",
+    "static/js/2.6121bb90.chunk.js",
+    "static/css/main.e79fa6c4.chunk.css",
+    "static/js/main.20df7540.chunk.js"
+  ]
+}

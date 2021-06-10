@@ -1,7 +1,5 @@
 import { AppStateType } from "../../../store-1-main/2-bll-main/redux-store"
 
-
-
 export const usersSelector=(state: AppStateType)=>{
     return state.users.users
 }
@@ -21,5 +19,14 @@ export const singleUserSelector=(state: AppStateType)=>{
 export const isLoadingSelector=(state: AppStateType)=>{
     return state.users.isLoading
 }
+
+export const tokenSelector=(state: AppStateType)=>{
+    return state.users.token
+}
+
+
+
+
+
 
 

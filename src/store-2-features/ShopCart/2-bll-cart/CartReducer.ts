@@ -16,7 +16,8 @@ export type CartType = {
 
 let initialState = {
     carts: [] as Array<CartType>,
-    singleCart: null as null | CartType
+    singleCart: null as null | CartType,
+    isLoading: true
 }
 
 export type InitialStateType = typeof initialState
@@ -56,8 +57,11 @@ const CartReducer = (state: InitialStateType = initialState, action: ActionsType
                 ...state,
                 carts: state.carts.filter(c => c.id !== action.idCart)
             }
-
-
+        case 'cart/TOOGLE_IS_LOAGING':
+            return {
+                ...state,
+                isLoading: action.isLoading
+            }
 
         default: return state
     }
@@ -82,6 +86,9 @@ export const actionsCart = {
     } as const),
     cartDeleted: (idCart: number) => ({
         type: 'cart/DELETE_CART', idCart
+    } as const),
+    isLoadingChanged: (isLoading: boolean) => ({
+        type: 'cart/TOOGLE_IS_LOAGING', isLoading
     } as const),
 
 }
@@ -112,30 +119,26 @@ export const getUserCartsThunk = (idUser: number): ThunkType => {
 }
 
 export const addNewProductInCartThunk = (obj: CartType): ThunkType => {
-    debugger
     return async (dispatch) => {
-        debugger
         let data = await apiCart.addProductInCart(obj)
-        console.log(data)
         dispatch(actionsCart.productAddedInCart(data))
     }
 }
 
-export const changeProductInCartThunk = (idCart:number, obj: CartType): ThunkType => {
+export const changeProductInCartThunk = (idCart: number, obj: CartType): ThunkType => {
     return async (dispatch) => {
         let data = await apiCart.changeProductCart(idCart, obj)
-        console.log(data)
         dispatch(actionsCart.cartChanged(data))
     }
 }
 
-export const deleteProductCartThunk = (id:number): ThunkType => {
+export const deleteProductCartThunk = (id: number): ThunkType => {
 
     return async (dispatch) => {
-
-        let data = await apiCart.deleteProductCart(id)
-        console.log(data)
+        dispatch(actionsCart.isLoadingChanged(true))
+        await apiCart.deleteProductCart(id)
         dispatch(actionsCart.cartDeleted(id))
+        dispatch(actionsCart.isLoadingChanged(false))
     }
 }
 

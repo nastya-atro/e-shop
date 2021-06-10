@@ -1,33 +1,36 @@
 import React, { useEffect } from 'react';
+import s from './Cart.module.css'
 import { useSelector, useDispatch } from 'react-redux';
 import { cartsSelector } from './../2-bll-cart/CartSelector';
 import { getAllCartsThunk } from './../2-bll-cart/CartReducer';
 import { NavLink } from 'react-router-dom';
-import AddProductForm from '../../Store/product-1-ui/AddProductForm';
 
+const AdminAllCart = React.memo(() => {
 
-const AdminAllCart=()=>{
     const carts = useSelector(cartsSelector)
 
     const dispatch = useDispatch()
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getAllCartsThunk())
-    },[carts])
+    }, [carts])
 
+    return (
+        <div>
 
-    return(
-        <ul>
-            <div><NavLink to ='/users'>Users</NavLink></div>
-            {carts.map((c, index)=><NavLink to={`/admin/cart/${c.id}`}><li key={index}>
-                <div>Date: {new Date(c.date).toLocaleDateString()}</div>
-                <div>Number cart: {c.id}</div>
-            </li></NavLink>)}
-            <AddProductForm />
-        </ul>
+            {carts.map((c, index) =><div key={index}> <NavLink to={`/cart/${c.id}`}>
 
+                <div className={s.cart_all} >
+
+                    <div>Date: {new Date(c.date).toLocaleDateString()}</div>
+                    <div>Number cart: {c.id}</div>
+
+                </div>
+            </NavLink></div>)}
+
+        </div>
     )
-}
+})
 
 
 export default AdminAllCart

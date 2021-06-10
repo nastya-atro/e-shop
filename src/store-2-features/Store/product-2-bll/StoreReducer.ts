@@ -2,9 +2,6 @@ import { CommonActionsTypes, CommonThunkType } from "../../../store-1-main/2-bll
 import { ValuesType } from "../product-1-ui/AddProductForm"
 import { apiStore } from "../product-3-dal/apiStore"
 
-
-
-
 type ProductsType = {
     id?: number,
     title: string,

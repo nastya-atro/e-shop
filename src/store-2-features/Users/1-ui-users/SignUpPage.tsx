@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import { Formik, Form, Field } from 'formik';
+import { useState } from 'react';
+import { Formik, Form } from 'formik';
+import s from './User.module.css'
 import { useDispatch } from 'react-redux';
 import { signUpThunk } from '../2-bll-users/UsersReducer';
 import { Redirect } from 'react-router';
+import { Button, TextField } from '@material-ui/core';
 
 
 export type SignUpValuesType = {
@@ -57,45 +59,61 @@ const SignUpPage = () => {
     return (
         <div>
             <h3>Sign Up Form</h3>
+            <div className={s.sign_up_input}>
+                <Formik
+                    initialValues={{ email: '', password: '', userName: '', firstname: '', lastname: '', city: '', street: '', number: 1, zipcode: '', phone: '' }}
+                    onSubmit={login}
+                >
+                    {({ isSubmitting, handleChange, values, isValid,
+                        handleBlur, }) => (
+                        <Form>
+                            <div>Common info </div>
+                            <div>
+                                <TextField onChange={handleChange} onBlur={handleBlur} type="text"
+                                    name="email" value={values.email} label="Email" />
+                            </div>
+                            <div>
+                                <TextField onChange={handleChange} onBlur={handleBlur} type="text"
+                                    name="userName" value={values.userName} label="UserName" />
+                            </div>
+                            <div>
+                                <TextField onChange={handleChange} onBlur={handleBlur} type="text"
+                                    name="firstname" value={values.firstname} label="Firstname" />
+                            </div>
+                            <div>
+                                <TextField onChange={handleChange} onBlur={handleBlur} type="text"
+                                    name="lastname" value={values.lastname} label="Lastname" />
+                            </div>
+                            <div>Adress  </div>
+                            <TextField onChange={handleChange} onBlur={handleBlur} type="text"
+                                name="city" value={values.city} label="City" />
+                            <div>
+                                <TextField onChange={handleChange} onBlur={handleBlur} type="text"
+                                    name="street" value={values.street} label="Street" />
+                            </div>
+                            <div>
+                                <TextField onChange={handleChange} onBlur={handleBlur} type="text"
+                                    name="number" value={values.number} label="Number" />
+                            </div>
+                            <TextField onChange={handleChange} onBlur={handleBlur} type="text"
+                                name="zipcode" value={values.zipcode} label="Zipcode" />
+                            <div>Contacts </div>
+                            <div>
+                                <TextField onChange={handleChange} onBlur={handleBlur} type="text"
+                                    name="phone" value={values.phone} label="Phone" />
+                            </div>
+                            <div>
+                                <TextField onChange={handleChange} onBlur={handleBlur}
+                                    type="password" name="password" label="Password" value={values.password} />
+                            </div>
+                            <div className={s.sign_up_button}>
+                                <Button type="submit" disabled={!isValid || isSubmitting} variant="contained" color="secondary">
+                                    Sign Up </Button></div>
 
-            <Formik
-                initialValues={{ email: '', password: '', userName: '', firstname: '', lastname: '', city: '', street: '', number: 1, zipcode: '', phone: '' }}
-                onSubmit={login}
-            >
-                {({ isSubmitting, handleChange, values, isValid,
-                    handleBlur, }) => (
-                    <Form>
-                        <div>Common info: </div>
-                        <Field onChange={handleChange} onBlur={handleBlur} type="text"
-                            name="email" value={values.email} placeholder="email" />
-                        <Field onChange={handleChange} onBlur={handleBlur} type="text"
-                            name="userName" value={values.userName} placeholder="userName" />
-                        <Field onChange={handleChange} onBlur={handleBlur} type="text"
-                            name="firstname" value={values.firstname} placeholder="firstname" />
-                        <Field onChange={handleChange} onBlur={handleBlur} type="text"
-                            name="lastname" value={values.lastname} placeholder="lastname" />
-                        <div>Adress info: </div>
-                        <Field onChange={handleChange} onBlur={handleBlur} type="text"
-                            name="city" value={values.city} placeholder="city" />
-                        <Field onChange={handleChange} onBlur={handleBlur} type="text"
-                            name="street" value={values.street} placeholder="street" />
-                        <Field onChange={handleChange} onBlur={handleBlur} type="text"
-                            name="number" value={values.number} placeholder="number" />
-                        <Field onChange={handleChange} onBlur={handleBlur} type="text"
-                            name="zipcode" value={values.zipcode} placeholder="zipcode" />
-                        <div>Contacts: </div>
-                        <Field onChange={handleChange} onBlur={handleBlur} type="text"
-                            name="phone" value={values.phone} placeholder="phone" />
-
-                        <Field onChange={handleChange} onBlur={handleBlur}
-                            type="password" name="password" placeholder="Password" value={values.password} />
-
-                        <button type="submit" disabled={!isValid || isSubmitting}>
-                            Sign up
-           </button>
-                    </Form>
-                )}
-            </Formik>
+                        </Form>
+                    )}
+                </Formik>
+            </div>
 
         </div>
     )

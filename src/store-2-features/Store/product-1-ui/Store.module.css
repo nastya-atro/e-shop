@@ -1,3 +1,4 @@
+
 .container_grid{
     margin: auto
 }
@@ -5,7 +6,6 @@
 .container_item{
     width: 345px;
     height: 520px;
-   
 }
 
 a{
@@ -14,8 +14,132 @@ a{
 }
 
 .products_sort{
-    
     padding: 10px;
-    margin-left: 90px
+    margin-left: 140px;
+    
+    margin-top: 30px;
+    margin-bottom: 20px;
+    background-color: rgba(255, 187, 0, 0.534);
+}
+
+.products_img img{
+    height: 350px;
+}
+
+.products_paper{
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.products_title{
+    background-color: rgba(97, 165, 177, 0.432);
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.products_title h3{
+    background-color: rgba(209, 134, 134, 0.493);
+    padding: 5px
+}
+
+.products_description{
+    background-color: rgba(209, 134, 134, 0.493);
+    padding: 10px
+}
+
+.products_container{
+    margin-top: 20px;
+}
+
+.products_button{
+    width: 50%;
+    background: rgb(231, 119, 119);
+}
+
+.products_form{
+    padding: 15px;
     
 }
+
+.products_form input{
+    
+    width: 400px
+}
+
+.products_button_form button{
+    margin-top: 5px;
+    margin-left: 10px;
+    width: 200px;
+}
+
+.form_add_new_product{
+    background-color: white;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.form_add_new_product h3{
+    background-color: rgba(97, 165, 177, 0.432);
+    padding: 10px;  
+}
+
+.form_add_new_product input{
+    width: 400px;
+}
+
+.form_add_new_product button{
+    margin-bottom: 10px;
+    width: 400px;
+}
+
+.product_img img{
+    height: 200px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.product_img img:hover{
+    transform: scale(1.5)
+}
+
+.container_paper{
+    width: 300px;
+    height: 420px;
+    text-align: center;
+}
+
+.title{
+    height: 60px;
+    background-color: rgba(97, 165, 177, 0.432);
+    padding: 10px;
+    font-weight: bold;
+}
+
+.title:hover{
+    background-color: rgba(97, 165, 177, 0.219);
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.category{
+    background-color: rgb(206, 107, 107);
+    padding: 10px;
+    text-transform: uppercase;
+}
+
+.price{
+    background-color: rgba(255, 187, 0, 0.534);
+    padding: 10px;
+}
+
+.add_new_product {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.back{
+    padding: 10px
+ }
+ 
+ .back:hover{
+     color: rgba(0, 0, 0, 0.507);
+  }

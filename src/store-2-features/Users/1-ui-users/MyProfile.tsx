@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import s from './User.module.css'
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteProfileThunk, getSingleUserThunk, updateProfileInfoThunk } from '../2-bll-users/UsersReducer';
-import { isLoadingSelector, singleUserSelector} from './../2-bll-users/UsersSelector';
-import { Formik, Form, Field } from 'formik';
-import {SignUpValuesType} from './SignUpPage'
-
+import { isAuthSelector, isLoadingSelector, singleUserSelector } from './../2-bll-users/UsersSelector';
+import { Formik, Form } from 'formik';
+import { SignUpValuesType } from './SignUpPage'
+import { Button, Container, Paper, TextField } from '@material-ui/core';
+import { NavLink } from 'react-router-dom';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 
 const MyProfile = () => {
     const singleUser = useSelector(singleUserSelector)
     const isLoading = useSelector(isLoadingSelector)
+    const isAuth = useSelector(isAuthSelector)
 
     const [visibleFormChanges, setVisibleFormChanges] = useState(false)
 
@@ -40,92 +44,112 @@ const MyProfile = () => {
         dispatch(updateProfileInfoThunk(1, newUser))
         setSubmitting(false)
         setVisibleFormChanges(false)
-
     }
-
-
 
     useEffect(() => {
         dispatch(getSingleUserThunk(1))
-
     }, [])
 
-    const deleteProfile=()=>{
+    const deleteProfile = () => {
         dispatch(deleteProfileThunk(1))
     }
-    const changeProfile=()=>{
-        setVisibleFormChanges(true)
 
+    const changeProfile = () => {
+        setVisibleFormChanges(true)
     }
 
 
     return (
-        <div>{singleUser && <div>
-            <div><b>User name: </b>{singleUser.name.firstname} {singleUser.name.lastname}</div>
-            <div><b>User login: </b>{singleUser.username}</div>
+        <Container maxWidth='sm'>
+            <Paper className={s.user_paper}>
+                <div className={s.user_title}>
+                    <NavLink to='/'><ArrowBackIosIcon className={s.back} /></NavLink>
+                    <h2>My Profile</h2>
 
-            <div><b>Contacts: </b>
-                <div>Email: {singleUser.email}</div>
-                <div>Phone: {singleUser.phone}</div></div>
+                    <div>
+                        {isAuth ? <>
+                            {singleUser && <div>
 
-            <div><b>Adress: </b>
-                <div>City: {singleUser.address.city}</div>
-                <div>Street: {singleUser.address.street}</div>
-                <div>Zipcode: {singleUser.address.zipcode}</div>
-                <div>Geolocation lat: {singleUser.address.geolocation.lat}Geolocation long: {singleUser.address.geolocation.long}</div>
-            </div>
+                                <div className={s.user_name}> <h3>Common info</h3>
+                                    <div><b>User name </b>{singleUser.name.firstname} {singleUser.name.lastname}</div>
+                                    <div><b>Login </b>{singleUser.username}</div></div>
 
-        </div>}
-{visibleFormChanges &&<div>
-    <Formik
-                initialValues={{ email: '', password: '', userName: '', firstname: '', lastname: '', city: '', street: '', number: 1, zipcode: '', phone: '' }}
-                onSubmit={changeInfo}
-            >
-                {({ isSubmitting, handleChange, values, isValid,
-                    handleBlur, }) => (
-                    <Form>
-                        <div>Common info: </div>
-                        <Field onChange={handleChange} onBlur={handleBlur} type="text"
-                            name="email" value={values.email} placeholder="email" />
-                        <Field onChange={handleChange} onBlur={handleBlur} type="text"
-                            name="userName" value={values.userName} placeholder="userName" />
-                        <Field onChange={handleChange} onBlur={handleBlur} type="text"
-                            name="firstname" value={values.firstname} placeholder="firstname" />
-                        <Field onChange={handleChange} onBlur={handleBlur} type="text"
-                            name="lastname" value={values.lastname} placeholder="lastname" />
-                        <div>Adress info: </div>
-                        <Field onChange={handleChange} onBlur={handleBlur} type="text"
-                            name="city" value={values.city} placeholder="city" />
-                        <Field onChange={handleChange} onBlur={handleBlur} type="text"
-                            name="street" value={values.street} placeholder="street" />
-                        <Field onChange={handleChange} onBlur={handleBlur} type="text"
-                            name="number" value={values.number} placeholder="number" />
-                        <Field onChange={handleChange} onBlur={handleBlur} type="text"
-                            name="zipcode" value={values.zipcode} placeholder="zipcode" />
-                        <div>Contacts: </div>
-                        <Field onChange={handleChange} onBlur={handleBlur} type="text"
-                            name="phone" value={values.phone} placeholder="phone" />
+                                <div className={s.user_contacts}><h3>Contacts </h3>
+                                    <div><b>Email </b> {singleUser.email}</div>
+                                    <div><b>Phone </b> {singleUser.phone}</div></div>
 
-                        <Field onChange={handleChange} onBlur={handleBlur}
-                            type="password" name="password" placeholder="Password" value={values.password} />
+                                <div className={s.user_adress}><h3>Adress </h3>
+                                    <div><b>City </b> {singleUser.address.city}</div>
+                                    <div><b>Street </b>{singleUser.address.street}</div>
+                                    <div><b>Zipcode </b> {singleUser.address.zipcode}</div>
+                                    <div><b>Geolocation lat </b> {singleUser.address.geolocation.lat}Geolocation long: {singleUser.address.geolocation.long}</div>
+                                </div>
 
-                        <button type="submit" disabled={!isValid || isSubmitting}>
-                            ChangeInfo
-           </button>
-                    </Form>
-                )}
-            </Formik>
-                 </div>
-        }
-        
-  
+                            </div>}
 
+                            {visibleFormChanges && <div className={s.user_form}>
+                                <Formik
+                                    initialValues={{ email: '', password: '', userName: '', firstname: '', lastname: '', city: '', street: '', number: 1, zipcode: '', phone: '' }}
+                                    onSubmit={changeInfo} >
+                                    {({ isSubmitting, handleChange, values, isValid,
+                                        handleBlur, }) => (
+                                        <Form>
+                                            <div>Common info </div>
+                                            <TextField onChange={handleChange} onBlur={handleBlur} type="text"
+                                                name="email" value={values.email} label="email" />
+                                            <TextField onChange={handleChange} onBlur={handleBlur} type="text"
+                                                name="userName" value={values.userName} label="userName" />
+                                            <TextField onChange={handleChange} onBlur={handleBlur} type="text"
+                                                name="firstname" value={values.firstname} label="firstname" />
+                                            <TextField onChange={handleChange} onBlur={handleBlur} type="text"
+                                                name="lastname" value={values.lastname} label="lastname" />
+                                            <div>Adress  </div>
+                                            <TextField onChange={handleChange} onBlur={handleBlur} type="text"
+                                                name="city" value={values.city} label="city" />
+                                            <TextField onChange={handleChange} onBlur={handleBlur} type="text"
+                                                name="street" value={values.street} label="street" />
+                                            <TextField onChange={handleChange} onBlur={handleBlur} type="text"
+                                                name="number" value={values.number} label="number" />
+                                            <TextField onChange={handleChange} onBlur={handleBlur} type="text"
+                                                name="zipcode" value={values.zipcode} label="zipcode" />
+                                            <div>Contacts </div>
+                                            <TextField onChange={handleChange} onBlur={handleBlur} type="text"
+                                                name="phone" value={values.phone} label="phone" />
 
-        <button onClick={changeProfile}>Change Profile</button>
-        <div><button onClick={deleteProfile}>Delete Profile</button></div>
-        {!isLoading && <div>Profile deleted successfuly</div>}
-            
-        </div>
+                                            <TextField onChange={handleChange} onBlur={handleBlur}
+                                                type="password" name="password" label="Password" value={values.password} />
+
+                                            <div className={s.user_change_button}>
+                                                <Button onClick={deleteProfile} variant="contained" color="primary" type="submit" disabled={!isValid || isSubmitting}>
+                                                    Change </Button>
+                                            </div>
+                                        </Form>
+                                    )}
+                                </Formik>
+                            </div>
+                            }
+
+                            {!isLoading && <h3>Сompleted successfully !</h3>}
+
+                            <div className={s.user_button_form}>
+                                <Button onClick={changeProfile} type="submit" variant="contained" color="secondary">
+                                    Change Profile </Button>
+                                <Button onClick={deleteProfile} variant="contained" color="primary">
+                                    Delete Profile </Button>
+                            </div>
+
+                        </>
+                            : <div>
+                                <h3>You should login</h3>
+                                <NavLink to='/login'>
+                                    <Button className={s.adminButton} variant="contained" color="secondary">Login </Button>
+                                </NavLink>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </Paper>
+        </Container>
     )
 }
 

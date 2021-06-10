@@ -14,7 +14,7 @@ import User from '../../store-2-features/Users/1-ui-users/SingleUser';
 import AgminSingleCart from '../../store-2-features/ShopCart/1-ui-cart/AdminSingleCart';
 import UserCart from './../../store-2-features/ShopCart/1-ui-cart/UserCart';
 import MyProfile from './../../store-2-features/Users/1-ui-users/MyProfile';
-import { AppBar, Theme, createStyles, IconButton, makeStyles, Toolbar, Typography, Breadcrumbs, Button, Popper, Paper, ClickAwayListener, MenuItem, MenuList, Grow, Divider, Badge } from '@material-ui/core';
+import { AppBar,IconButton, Toolbar, Typography, Breadcrumbs, Button, Popper, Paper, ClickAwayListener, MenuItem, MenuList, Grow, Divider, Badge } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { isAuthSelector } from '../../store-2-features/Users/2-bll-users/UsersSelector';
 import HomeIcon from '@material-ui/icons/Home';
@@ -22,46 +22,20 @@ import PersonIcon from '@material-ui/icons/Person';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    link: {
-      display: 'flex',
-    },
-    icon: {
-      marginRight: theme.spacing(0.5),
-      width: 20,
-      height: 20,
-    },
-    breadcrumps: {
-      float: 'right',
-      marginTop: '10px',
-      marginRight: '60px',
-      fontSize: '13px'
-    },
-    paper: {
-      marginRight: theme.spacing(2),
-    },
-    title: {
-      flexGrow: 1,
-    },
-  }),
-);
+import AdminPage from './../../store-2-features/ShopCart/1-ui-cart/AdminPage';
+import { cartsSelector } from './../../store-2-features/ShopCart/2-bll-cart/CartSelector';
+import { useStylesApp } from './../../store-3-common/Material.styles';
 
 
 const App = () => {
-  const classes = useStyles()
+  const classes = useStylesApp()
 
   const isAuth = useSelector(isAuthSelector)
+  const carts = useSelector(cartsSelector)
 
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLButtonElement>(null);
+
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -98,38 +72,32 @@ const App = () => {
         <Toolbar className={s.appbar} variant="dense">
 
           <div>
-            <Button
-              ref={anchorRef}
-              aria-controls={open ? 'menu-list-grow' : undefined}
-              aria-haspopup="true"
-              onClick={handleToggle}
-            >
+            <Button ref={anchorRef} aria-controls={open ? 'menu-list-grow' : undefined} aria-haspopup="true" onClick={handleToggle} >
               <MenuIcon style={{ color: 'white' }} />
             </Button>
+
             <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
               {({ TransitionProps, placement }) => (
                 <Grow
                   {...TransitionProps}
-                  style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-                >
+                  style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}>
+
                   <Paper>
+
                     <ClickAwayListener onClickAway={handleClose}>
                       <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
 
                         <MenuItem className={s.item_menu} onClick={handleClose}> <NavLink to='/'>
                           <HomeIcon /> <span>Catalog</span></NavLink></MenuItem>
 
-
                         <MenuItem className={s.item_menu} onClick={handleClose}> <NavLink to='/usercart'>
                           <ShoppingCartIcon /><span>Shopping cart</span></NavLink></MenuItem>
-
 
                         <MenuItem className={s.item_menu} onClick={handleClose}> <NavLink to='/profile'>
                           <PersonIcon /><span>My Profile</span> </NavLink></MenuItem>
 
-
                         {!isAuth && <MenuItem className={s.item_menu} onClick={handleClose}> <NavLink to='/login'>
-                          <ExitToAppIcon /><span>Login</span></NavLink></MenuItem>}
+                          <ExitToAppIcon /><span >Login</span></NavLink></MenuItem>}
                         <Divider />
 
                         <MenuItem className={s.item_menu} onClick={handleClose}> <NavLink to='/admin'>
@@ -144,10 +112,10 @@ const App = () => {
             </Popper>
           </div>
 
-          <Typography className={classes.title} variant="h6" color="inherit"> Chevos`ka shop </Typography>
+          <Typography className={classes.title} variant="h6" color="inherit"><NavLink to='/' className={s.title}> E-shop </NavLink></Typography>
 
           <IconButton aria-label="show 4 new mails" color="inherit">
-            <Badge badgeContent={0} color="secondary">
+            <Badge badgeContent={carts.length} color="secondary">
               <NavLink to='/usercart'> <ShoppingCartIcon style={{ color: 'white' }} /></NavLink>
             </Badge>
           </IconButton>
@@ -163,9 +131,8 @@ const App = () => {
       </Breadcrumbs>
 
 
-
-      <Route exact path='/admin' render={() => <AdminAllCart />} />
-      <Route path='/admin/cart/:Id?' render={() => <AgminSingleCart />} />
+      <Route exact path='/orders' render={() => <AdminAllCart />} />
+      <Route exact path='/cart/:Id?' render={() => <AgminSingleCart />} />
       <Route path='/usercart' render={() => <UserCart />} />
       <Route path='/users' render={() => <Users />} />
       <Route path='/login' render={() => <LoginPage />} />
@@ -173,11 +140,10 @@ const App = () => {
       <Route exact path='/products/:Id?' render={() => <Product />} />
       <Route exact path='/user/:Id?' render={() => <User />} />
       <Route path='/profile' render={() => <MyProfile />} />
+      <Route path='/admin' render={() => <AdminPage />} />
     </React.Fragment>
   );
 }
-
-
 
 
 let AppC = withRouter(App)

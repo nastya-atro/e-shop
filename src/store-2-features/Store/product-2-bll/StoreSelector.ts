@@ -24,3 +24,5 @@ export const sortValueSelector=(state: AppStateType)=>{
 export const categoryProductsSelector=(state: AppStateType)=>{
     return state.store.category
 }
+
+

@@ -1,0 +1,104 @@
+.user_paper{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.user_name{
+    background-color: rgba(97, 165, 177, 0.432);
+    padding: 10px
+}
+
+.user_contacts{
+    background-color: 'white';
+    padding: 10px
+
+}
+
+.user_contacts h3,
+.user_name h3,
+.user_adress h3{
+    text-transform: uppercase;
+}
+
+.user_adress{
+    background-color: rgba(97, 165, 177, 0.432);
+    padding: 10px
+}
+
+.user_button_form button{
+    width: 50%
+}
+
+.user_form{
+    padding: 10px
+}
+
+.user_form input{
+    width: 400px
+}
+
+.user_change_button{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.user_title{
+    background-color: rgba(255, 187, 0, 0.534);
+    text-transform: uppercase;
+    padding: 10px
+}
+
+.login_button button{
+    margin-top: 10px;
+    width: 400px;
+}
+
+.login_input input{
+    width: 400px
+}
+
+.user_paper h3{
+    background-color: rgba(206, 107, 107, 0.863);
+    padding: 15px
+}
+
+.sign_up_input input{
+    width: 400px;
+    margin-right: 10px;
+}
+
+.sign_up_button button{
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 400px;
+}
+
+.users_list{
+    background-color: rgba(206, 107, 107, 0.342);
+    margin-bottom: 10px;
+}
+
+.users_list:hover{
+    background-color: rgba(206, 107, 107, 0.644);
+}
+
+.user_cart_info{
+    margin-bottom: 10px;
+}
+
+.user_cart_info:hover{
+    color: rgba(0, 0, 0, 0.452)
+}
+
+.back{
+   margin-top: 10px;
+}
+
+.back:hover{
+    color: rgba(0, 0, 0, 0.507);
+ }
+
+.adminButton{
+    width: 100%;
+}

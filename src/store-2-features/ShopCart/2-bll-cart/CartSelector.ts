@@ -8,3 +8,8 @@ export const cartsSelector=(state: AppStateType)=>{
 export const singleCartSelector=(state: AppStateType)=>{
     return state.cart.singleCart
 }
+
+export const isLoadingSelector=(state: AppStateType)=>{
+    return state.cart.isLoading
+}
+

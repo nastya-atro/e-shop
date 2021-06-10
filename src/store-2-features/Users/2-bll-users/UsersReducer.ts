@@ -26,13 +26,11 @@ export type UsersType = {
 
 let initialState = {
     users: [] as Array<UsersType>,
-    token: '',
+    token: null as null | '',
     isAuth: false,
     error: false,
     singleUser: null as null | UsersType,
     isLoading: true
-
-
 }
 
 export type InitialStateType = typeof initialState
@@ -83,14 +81,13 @@ const UsersReducer = (state: InitialStateType = initialState, action: ActionsTyp
             }
         default: return state
     }
-
 }
 
 export const actionsUsers = {
     usersRecived: (users: Array<UsersType>) => ({
         type: 'users/SET_ALL_USERS', users
     } as const),
-    loginSuccess: (token: string, isAuth: boolean, error: boolean) => ({
+    loginSuccess: (token: null | '', isAuth: boolean, error: boolean) => ({
         type: 'users/SET_LOGIN_AUTH', token, isAuth, error
     } as const),
     signUpSuccess: (user: UsersType, isAuth: boolean) => ({
@@ -108,6 +105,7 @@ export const actionsUsers = {
     isLoadingChanged: (isLoading: boolean) => ({
         type: 'user/TOOGLE_IS_LOAGING', isLoading
     } as const),
+
 }
 
 type ActionsTypes = CommonActionsTypes<typeof actionsUsers>
@@ -124,17 +122,19 @@ export const getAllUsersThunk = (): ThunkType => {
 export const loginAuthThunk = (userName: string, password: string): ThunkType => {
     return async (dispatch) => {
         let data = await apiUsers.loginAuth(userName, password)
-        if (data.status = 'Error') {
+        if (data.status === 'Error') {
             dispatch(actionsUsers.loginSuccess(data, false, true))
         }
-        dispatch(actionsUsers.loginSuccess(data, true, false))
+        if (data.token) {
+            dispatch(actionsUsers.loginSuccess(data, true, false))
+        }
     }
 }
 
 
 export const signUpThunk = (user: UsersType): ThunkType => {
     return async (dispatch) => {
-        let data = await apiUsers.signUp(user)
+        await apiUsers.signUp(user)
         dispatch(actionsUsers.signUpSuccess(user, true))
     }
 }
@@ -149,18 +149,16 @@ export const getSingleUserThunk = (id: number): ThunkType => {
 export const updateProfileInfoThunk = (id: number, user: UsersType): ThunkType => {
 
     return async (dispatch) => {
-       
         let data = await apiUsers.updateUserInfo(id, user)
-        console.log(data)
         dispatch(actionsUsers.profileInfoUpdated(data))
     }
 }
 
 export const deleteProfileThunk = (id: number): ThunkType => {
-  
+
     return async (dispatch) => {
         dispatch(actionsUsers.isLoadingChanged(true))
-        let data = await apiUsers.deleteProfile(id)
+        await apiUsers.deleteProfile(id)
         dispatch(actionsUsers.deleteProfile(id))
         dispatch(actionsUsers.isLoadingChanged(false))
     }

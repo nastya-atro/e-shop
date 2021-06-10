@@ -1,0 +1,106 @@
+.cart_paper{
+    margin-top: 50px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.cart_paper h3{
+    text-align: center;
+    background-color: rgba(97, 165, 177, 0.432);
+    padding: 20px
+}
+
+.cart_button{
+    margin-top: 10px;
+    width: 100%
+}
+
+.cart{
+    padding: 10px
+}
+
+.cart h4{
+    margin-top: 0;
+    width: auto;
+    padding: 10px;
+    text-align: center;
+    color:rgb(206, 107, 107);
+    text-transform: uppercase;
+    border: 1px solid rgb(206, 107, 107);
+    
+    
+}
+
+.cart h4:hover{
+    color:rgba(0, 0, 0, 0.705);
+    background-color: rgba(206, 107, 107, 0.699);
+
+}
+
+.cart_quanity{
+    margin-left: 20px
+}
+
+.cart_date{
+    margin-bottom: 10px
+}
+
+.cart_single_paper{
+    text-align: center;
+    margin-top: 50px;
+    padding: 10px;
+}
+
+.cart_users{
+    background-color: rgba(97, 165, 177, 0.432);
+    padding: 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.cart_users:hover{
+    background-color: rgba(97, 165, 177, 0.158);
+
+}
+
+.cart_orders{
+    background-color: rgba(255, 187, 0, 0.534);
+    padding: 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.cart_orders:hover{
+    background-color: rgba(255, 187, 0, 0.226);
+}
+
+.cart_all{
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid rgba(97, 165, 177, 0.432);
+}
+
+.cart_all:hover{
+    background-color: rgba(97, 165, 177, 0.158);;
+}
+
+.back{
+   margin-top: 10px;
+ }
+ 
+.back:hover{
+     color: rgba(0, 0, 0, 0.507);
+  }
+
+.adminButton{
+      width: 100%;
+  }
+
+.orderButton{
+    margin-top: 10px;
+    margin-top: 10px;
+    width: 100%
+}
+
+
+
